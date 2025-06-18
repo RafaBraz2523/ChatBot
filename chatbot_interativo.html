@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Chatbot em HTML</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .chat-container {
+      background: white;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    .chat-box {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+      background: #fafafa;
+    }
+    .chat-message {
+      margin: 5px 0;
+    }
+    .user {
+      font-weight: bold;
+      color: #007bff;
+    }
+    .bot {
+      font-weight: bold;
+      color: #28a745;
+    }
+    input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      margin-right: 5px;
+    }
+    button {
+      padding: 10px 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <h2>Chatbot em HTML</h2>
+    <div class="chat-box" id="chatBox"></div>
+    <input type="text" id="userInput" placeholder="Digite sua mensagem..." />
+    <button onclick="enviarMensagem()">Enviar</button>
+  </div>
+
+  <script>
+    const respostas = {
+      "oi": "Oi! Como posso te ajudar?",
+      "olá": "Olá! Tudo bem?",
+      "seu nome": "Sou um chatbot criado em HTML e JavaScript.",
+      "capital brasil": "A capital do Brasil é Brasília.",
+      "tudo bem": "Estou ótimo! E você?",
+      "hora": () => new Date().toLocaleTimeString(),
+      "data": () => new Date().toLocaleDateString(),
+      "programar": "Programar é uma habilidade essencial!",
+      "python": "Python é excelente para iniciantes e especialistas.",
+      "idade": "Sou apenas um código, sem idade 😄",
+      "clima": "Não posso acessar o clima agora, mas espero que esteja agradável.",
+      "futebol": "Futebol é uma paixão nacional! Qual seu time?",
+      "filme": "Adoro filmes de ficção científica. E você?",
+      "música": "Música faz bem pra alma! Qual seu estilo favorito?",
+      "piada": "Por que o jacaré tirou o filho da escola? Porque ele réptil de ano! 😂",
+      "inteligência artificial": "IA é a capacidade de máquinas imitarem humanos.",
+      "faculdade": "Estudar é essencial! Continue firme.",
+      "ajuda": "Você pode me perguntar sobre nome, hora, data, programação, clima, música, filmes, piadas e mais.",
+      "menu": "Você pode me perguntar sobre nome, hora, data, programação, clima, música, filmes, piadas e mais.",
+      "tchau": "Tchau! Até a próxima!",
+      "adeus": "Adeus! Volte sempre!"
+    };
+
+    function enviarMensagem() {
+      const input = document.getElementById("userInput");
+      const chatBox = document.getElementById("chatBox");
+      const msg = input.value.trim().toLowerCase();
+      if (msg === "") return;
+
+      chatBox.innerHTML += `<div class='chat-message user'>Você: ${msg}</div>`;
+
+      let resposta = "Desculpe, não entendi.";
+      for (let chave in respostas) {
+        if (msg.includes(chave)) {
+          resposta = typeof respostas[chave] === "function" ? respostas[chave]() : respostas[chave];
+          break;
+        }
+      }
+
+      chatBox.innerHTML += `<div class='chat-message bot'>Bot: ${resposta}</div>`;
+      input.value = "";
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
+</body>
+</html>
